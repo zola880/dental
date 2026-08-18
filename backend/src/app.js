@@ -14,6 +14,11 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const patientRoutes = require('./routes/patientRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
+const treatmentRoutes = require('./routes/treatmentRoutes');
+const invoiceRoutes = require('./routes/invoiceRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
+const expenseRoutes = require('./routes/expenseRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 
 const app = express();
 
@@ -46,6 +51,11 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/patients', patientRoutes);
 app.use('/api/v1/appointments', appointmentRoutes);
+app.use('/api/v1/treatments', treatmentRoutes);
+app.use('/api/v1/invoices', invoiceRoutes);
+app.use('/api/v1/payments', paymentRoutes);
+app.use('/api/v1/expenses', expenseRoutes);
+app.use('/api/v1/reports', reportRoutes);
 
 // Handle Undefined Routes
 app.all('*', (req, res, next) => {
