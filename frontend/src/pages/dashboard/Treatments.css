@@ -1,0 +1,20 @@
+.treatment-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.treatment-icon {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.treatment-title {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.treatment-patient {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}

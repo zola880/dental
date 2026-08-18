@@ -23,6 +23,9 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 import Dashboard from './pages/dashboard/Dashboard';
 import Patients from './pages/dashboard/Patients';
 import Appointments from './pages/dashboard/Appointments';
+import Treatments from './pages/dashboard/Treatments';
+import Billing from './pages/dashboard/Billing';
+import Financials from './pages/dashboard/Financials';
 
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
   const { user, isLoading } = useAuth();
@@ -46,6 +49,7 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Website Routes */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -55,12 +59,14 @@ const AppRoutes = () => {
           <Route path="/book-appointment" element={<AppointmentBooking />} />
         </Route>
 
+        {/* Auth Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        <Route 
-          path="/dashboard" 
+        {/* Protected Dashboard Routes */}
+        <Route
+          path="/dashboard"
           element={
             <ProtectedRoute>
               <DashboardLayout />
@@ -70,8 +76,33 @@ const AppRoutes = () => {
           <Route index element={<Dashboard />} />
           <Route path="patients" element={<Patients />} />
           <Route path="appointments" element={<Appointments />} />
+          <Route 
+            path="treatments" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'dentist']}>
+                <Treatments />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="billing" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}>
+                <Billing />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="financials" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'accountant']}>
+                <Financials />
+              </ProtectedRoute>
+            } 
+          />
         </Route>
 
+        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

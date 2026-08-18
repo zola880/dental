@@ -1,0 +1,115 @@
+.financials-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.date-range-select {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.date-range-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.financials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+.financials-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+.financials-empty {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--spacing-xl);
+}
+
+.revenue-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.revenue-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.revenue-item:last-child {
+  border-bottom: none;
+}
+
+.revenue-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.revenue-item__name {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.revenue-item__count {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.revenue-item__amount {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+.summary-value {
+  font-weight: 600;
+  color: var(--color-secondary);
+  font-size: var(--font-size-lg);
+}
+
+.financials-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+@media (max-width: 768px) {
+  .financials-grid {
+    grid-template-columns: 1fr;
+  }
+}

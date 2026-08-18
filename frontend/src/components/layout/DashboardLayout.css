@@ -1,0 +1,31 @@
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--color-background);
+}
+
+.dashboard-layout__main {
+  flex: 1;
+  margin-left: 260px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: margin-left var(--transition-base);
+}
+
+.dashboard-layout__content {
+  flex: 1;
+  padding: var(--spacing-xl);
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .dashboard-layout__main {
+    margin-left: 0;
+  }
+
+  .dashboard-layout__content {
+    padding: var(--spacing-md);
+    padding-top: calc(70px + var(--spacing-md));
+  }
+}
