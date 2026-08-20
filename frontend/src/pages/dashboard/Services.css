@@ -1,0 +1,43 @@
+.service-info {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.service-icon {
+  color: var(--color-primary);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.service-name {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.service-description {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  max-width: 300px;
+}
+
+.service-duration,
+.service-price {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.service-price {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.add-service-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}

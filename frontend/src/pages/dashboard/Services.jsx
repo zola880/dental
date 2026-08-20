@@ -1,104 +1,97 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { dentistService } from '../../services/dentistService';
-import { userService } from '../../services/userService';
-import { Search, Plus, User, Stethoscope, Mail, Phone } from 'lucide-react';
+import { serviceService } from '../../services/serviceService';
+import { Search, Plus, Stethoscope, Clock, DollarSign } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import { formatCurrency } from '../../utils/formatCurrency';
 import Table from '../../components/ui/Table';
 import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
-import Modal from '../../components/ui/Modal';
 import Select from '../../components/ui/Select';
+import Modal from '../../components/ui/Modal';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 import Toast from '../../components/ui/Toast';
-import './Dentists.css';
+import './Services.css';
 
-const Dentists = () => {
+const Services = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('');
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [selectedDentist, setSelectedDentist] = useState(null);
+  const [selectedService, setSelectedService] = useState(null);
   const [toast, setToast] = useState({ isVisible: false, message: '', type: 'info' });
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['dentists', { search, page }],
-    queryFn: () => dentistService.getAll({ search, page, limit: 10 }),
-  });
-
-  const { data: usersData } = useQuery({
-    queryKey: ['users', { role: 'dentist' }],
-    queryFn: () => userService.getAll({ role: 'dentist' }),
-    enabled: isModalOpen,
+    queryKey: ['services', { search, category: categoryFilter, page }],
+    queryFn: () => serviceService.getAll({ search, category: categoryFilter, page, limit: 20 }),
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => dentistService.delete(id),
+    mutationFn: (id) => serviceService.delete(id),
     onSuccess: () => {
-      queryClient.invalidateQueries(['dentists']);
+      queryClient.invalidateQueries(['services']);
       setIsDeleteDialogOpen(false);
-      setToast({ isVisible: true, message: 'Dentist removed successfully', type: 'success' });
+      setToast({ isVisible: true, message: 'Service deactivated successfully', type: 'success' });
     },
     onError: (error) => {
-      setToast({ isVisible: true, message: error.message || 'Failed to remove dentist', type: 'error' });
+      setToast({ isVisible: true, message: error.message || 'Failed to deactivate service', type: 'error' });
     },
   });
 
   const columns = [
     {
       key: 'name',
-      header: 'Dentist',
+      header: 'Service Name',
       render: (row) => (
-        <div className="dentist-info">
-          <div className="dentist-avatar">
-            <User size={20} />
-          </div>
+        <div className="service-info">
+          <Stethoscope size={18} className="service-icon" />
           <div>
-            <div className="dentist-name">
-              Dr. {row.user?.firstName} {row.user?.lastName}
-            </div>
-            <div className="dentist-specialization">{row.specialization}</div>
+            <div className="service-name">{row.name}</div>
+            <div className="service-description">{row.description || 'No description'}</div>
           </div>
         </div>
       ),
     },
     {
-      key: 'contact',
-      header: 'Contact',
+      key: 'category',
+      header: 'Category',
       render: (row) => (
-        <div className="dentist-contact">
-          <div className="contact-item">
-            <Mail size={14} />
-            <span>{row.user?.email}</span>
-          </div>
-          <div className="contact-item">
-            <Phone size={14} />
-            <span>{row.user?.phone || 'N/A'}</span>
-          </div>
+        <Badge variant="primary">
+          {row.category || 'General'}
+        </Badge>
+      ),
+    },
+    {
+      key: 'duration',
+      header: 'Duration',
+      render: (row) => (
+        <div className="service-duration">
+          <Clock size={14} />
+          <span>{row.duration} min</span>
         </div>
       ),
     },
     {
-      key: 'experience',
-      header: 'Experience',
-      render: (row) => `${row.experience} years`,
-    },
-    {
-      key: 'licenseNumber',
-      header: 'License #',
+      key: 'price',
+      header: 'Price',
+      align: 'right',
       render: (row) => (
-        <span className="license-number">{row.licenseNumber}</span>
+        <div className="service-price">
+          <DollarSign size={14} />
+          <span>{formatCurrency(row.price)}</span>
+        </div>
       ),
     },
     {
-      key: 'isAvailable',
+      key: 'isActive',
       header: 'Status',
       render: (row) => (
-        <Badge variant={row.isAvailable ? 'success' : 'default'}>
-          {row.isAvailable ? 'Available' : 'Unavailable'}
+        <Badge variant={row.isActive ? 'success' : 'default'}>
+          {row.isActive ? 'Active' : 'Inactive'}
         </Badge>
       ),
     },
@@ -109,18 +102,18 @@ const Dentists = () => {
       render: (row) => (
         <div className="action-buttons">
           <Button variant="secondary" size="sm">
-            View Profile
+            Edit
           </Button>
           {user?.role === 'admin' && (
             <Button
               variant="danger"
               size="sm"
               onClick={() => {
-                setSelectedDentist(row);
+                setSelectedService(row);
                 setIsDeleteDialogOpen(true);
               }}
             >
-              Remove
+              Deactivate
             </Button>
           )}
         </div>
@@ -129,8 +122,8 @@ const Dentists = () => {
   ];
 
   const handleDelete = () => {
-    if (selectedDentist) {
-      deleteMutation.mutate(selectedDentist._id);
+    if (selectedService) {
+      deleteMutation.mutate(selectedService._id);
     }
   };
 
@@ -138,12 +131,12 @@ const Dentists = () => {
     <div className="page-container">
       <div className="page-header">
         <div>
-          <h1 className="page-title">Dentists</h1>
-          <p className="page-subtitle">Manage dental professionals and their profiles.</p>
+          <h1 className="page-title">Services</h1>
+          <p className="page-subtitle">Manage clinic services, pricing, and availability.</p>
         </div>
         {user?.role === 'admin' && (
           <Button variant="primary" onClick={() => setIsModalOpen(true)}>
-            <Plus size={18} /> Add Dentist
+            <Plus size={18} /> Add Service
           </Button>
         )}
       </div>
@@ -151,21 +144,35 @@ const Dentists = () => {
       <div className="page-controls">
         <div className="search-box">
           <Input
-            placeholder="Search by name or email..."
+            placeholder="Search services..."
             icon={Search}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
+        <Select
+          options={[
+            { value: 'preventive', label: 'Preventive' },
+            { value: 'cosmetic', label: 'Cosmetic' },
+            { value: 'restorative', label: 'Restorative' },
+            { value: 'surgical', label: 'Surgical' },
+            { value: 'orthodontics', label: 'Orthodontics' },
+            { value: 'pediatric', label: 'Pediatric' },
+            { value: 'emergency', label: 'Emergency' },
+          ]}
+          placeholder="All Categories"
+          value={categoryFilter}
+          onChange={(e) => setCategoryFilter(e.target.value)}
+        />
       </div>
 
-      {error && <div className="error-message">Failed to load dentists.</div>}
+      {error && <div className="error-message">Failed to load services.</div>}
 
       <Table
         columns={columns}
         data={data?.data || []}
         isLoading={isLoading}
-        emptyMessage="No dentists found."
+        emptyMessage="No services found."
       />
 
       {data?.meta && data.meta.totalPages > 1 && (
@@ -192,33 +199,23 @@ const Dentists = () => {
         </div>
       )}
 
-      {/* Add Dentist Modal */}
+      {/* Add Service Modal */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Add New Dentist"
+        title="Add New Service"
         size="md"
       >
-        <div className="add-dentist-form">
+        <div className="add-service-form">
           <p className="modal-description">
-            Select an existing user with the dentist role to create a dentist profile.
+            Service creation form will be implemented here.
           </p>
-          <Select
-            label="Select User"
-            options={
-              usersData?.data?.map(u => ({
-                value: u._id,
-                label: `${u.firstName} ${u.lastName} (${u.email})`
-              })) || []
-            }
-            placeholder="Choose a user..."
-          />
           <div className="modal-actions">
             <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
               Cancel
             </Button>
             <Button variant="primary">
-              Create Profile
+              Create Service
             </Button>
           </div>
         </div>
@@ -229,9 +226,9 @@ const Dentists = () => {
         isOpen={isDeleteDialogOpen}
         onClose={() => setIsDeleteDialogOpen(false)}
         onConfirm={handleDelete}
-        title="Remove Dentist"
-        message={`Are you sure you want to remove Dr. ${selectedDentist?.user?.firstName} ${selectedDentist?.user?.lastName}? This will deactivate their account.`}
-        confirmText="Remove"
+        title="Deactivate Service"
+        message={`Are you sure you want to deactivate "${selectedService?.name}"? This service will no longer be available for appointments.`}
+        confirmText="Deactivate"
         isLoading={deleteMutation.isPending}
       />
 
@@ -246,4 +243,4 @@ const Dentists = () => {
   );
 };
 
-export default Dentists;
+export default Services;

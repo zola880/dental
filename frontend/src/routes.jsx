@@ -4,11 +4,11 @@ import { useAuth } from './hooks/useAuth';
 import LoadingSpinner from './components/ui/LoadingSpinner';
 import NotFound from './components/NotFound';
 
-// Layouts (loaded eagerly as they're always needed)
+// Layouts
 import PublicLayout from './components/layout/PublicLayout';
 import DashboardLayout from './components/layout/DashboardLayout';
 
-// Lazy-loaded pages for code splitting
+// Lazy-loaded pages
 const Home = lazy(() => import('./pages/public/Home'));
 const About = lazy(() => import('./pages/public/About'));
 const Services = lazy(() => import('./pages/public/Services'));
@@ -38,31 +38,18 @@ const AuditLogs = lazy(() => import('./pages/dashboard/AuditLogs'));
 const Settings = lazy(() => import('./pages/dashboard/Settings'));
 
 const PageLoader = () => (
-  <div style={{ 
-    minHeight: '400px', 
-    display: 'flex', 
-    alignItems: 'center', 
-    justifyContent: 'center' 
-  }}>
+  <div style={{ minHeight: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
     <LoadingSpinner size="lg" />
   </div>
 );
 
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
   const { user, isLoading } = useAuth();
-
-  if (isLoading) {
-    return <PageLoader />;
-  }
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
+  if (isLoading) return <PageLoader />;
+  if (!user) return <Navigate to="/login" replace />;
   if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
     return <Navigate to="/dashboard" replace />;
   }
-
   return children;
 };
 
@@ -71,7 +58,6 @@ const AppRoutes = () => {
     <BrowserRouter>
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          {/* Public Website Routes */}
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
@@ -81,20 +67,11 @@ const AppRoutes = () => {
             <Route path="/book-appointment" element={<AppointmentBooking />} />
           </Route>
 
-          {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
 
-          {/* Protected Dashboard Routes */}
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardLayout />
-              </ProtectedRoute>
-            }
-          >
+          <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
             <Route index element={<Dashboard />} />
             <Route path="patients" element={<Patients />} />
             <Route path="patients/:id" element={<PatientProfile />} />
@@ -114,7 +91,6 @@ const AppRoutes = () => {
             <Route path="*" element={<NotFound />} />
           </Route>
 
-          {/* Catch-all 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
