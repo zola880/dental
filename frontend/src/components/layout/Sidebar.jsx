@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Users, 
   Calendar, 
   Stethoscope, 
   Receipt, 
-  CreditCard, 
   TrendingUp, 
   Bell, 
   Settings, 
   LogOut,
   Menu,
   X,
-  Tooth
+  Tooth,
+  Briefcase
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import './Sidebar.css';
@@ -22,13 +22,14 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const { user, logout } = useAuth();
-  const location = useLocation();
 
   const menuItems = [
     { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', roles: ['admin', 'dentist', 'receptionist', 'accountant'] },
     { path: '/dashboard/patients', icon: Users, label: 'Patients', roles: ['admin', 'dentist', 'receptionist'] },
     { path: '/dashboard/appointments', icon: Calendar, label: 'Appointments', roles: ['admin', 'dentist', 'receptionist'] },
     { path: '/dashboard/treatments', icon: Stethoscope, label: 'Treatments', roles: ['admin', 'dentist'] },
+    { path: '/dashboard/dentists', icon: Briefcase, label: 'Dentists', roles: ['admin'] },
+    { path: '/dashboard/services', icon: Briefcase, label: 'Services', roles: ['admin'] },
     { path: '/dashboard/billing', icon: Receipt, label: 'Billing', roles: ['admin', 'accountant', 'receptionist'] },
     { path: '/dashboard/financials', icon: TrendingUp, label: 'Financials', roles: ['admin', 'accountant'] },
     { path: '/dashboard/notifications', icon: Bell, label: 'Notifications', roles: ['admin', 'dentist', 'receptionist', 'accountant'] },
