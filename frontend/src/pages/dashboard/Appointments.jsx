@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { appointmentService } from '../../services/appointmentService';
-import { Calendar, Search, Clock, User } from 'lucide-react';
+import { Calendar, Search, Clock, User, Plus, Edit } from 'lucide-react';
 import Table from '../../components/ui/Table';
 import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
+import AppointmentFormModal from '../../components/modals/AppointmentFormModal';
+import { formatDateTime } from '../../utils/formatDate';
 import './Appointments.css';
 
 const getStatusVariant = (status) => {
@@ -24,6 +26,8 @@ const Appointments = () => {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['appointments', { search, page, status: statusFilter }],
@@ -56,9 +60,7 @@ const Appointments = () => {
       render: (row) => (
         <div className="appointment-datetime">
           <Calendar size={14} className="appointment-icon" />
-          <span>{new Date(row.startDateTime).toLocaleDateString()}</span>
-          <Clock size={14} className="appointment-icon" />
-          <span>{new Date(row.startDateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+          <span>{formatDateTime(row.startDateTime)}</span>
         </div>
       ),
     },
@@ -75,11 +77,25 @@ const Appointments = () => {
       key: 'actions',
       header: 'Actions',
       align: 'right',
-      render: () => (
-        <Button variant="secondary" size="sm">Details</Button>
+      render: (row) => (
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => {
+            setSelectedAppointment(row);
+            setIsModalOpen(true);
+          }}
+        >
+          <Edit size={14} /> Edit
+        </Button>
       ),
     },
   ];
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedAppointment(null);
+  };
 
   return (
     <div className="page-container">
@@ -88,7 +104,7 @@ const Appointments = () => {
           <h1 className="page-title">Appointments</h1>
           <p className="page-subtitle">Manage daily schedules and patient visits.</p>
         </div>
-        <Button variant="primary">
+        <Button variant="primary" onClick={() => setIsModalOpen(true)}>
           <Calendar size={18} /> New Appointment
         </Button>
       </div>
@@ -102,7 +118,7 @@ const Appointments = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <select 
+        <select
           className="filter-select"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
@@ -118,18 +134,18 @@ const Appointments = () => {
 
       {error && <div className="error-message">Failed to load appointments. Please try again.</div>}
 
-      <Table 
-        columns={columns} 
-        data={data?.data || []} 
-        isLoading={isLoading} 
+      <Table
+        columns={columns}
+        data={data?.data || []}
+        isLoading={isLoading}
         emptyMessage="No appointments found matching your criteria."
       />
 
       {data?.meta && data.meta.totalPages > 1 && (
         <div className="pagination">
-          <Button 
-            variant="secondary" 
-            size="sm" 
+          <Button
+            variant="secondary"
+            size="sm"
             disabled={page === 1}
             onClick={() => setPage(p => p - 1)}
           >
@@ -138,9 +154,9 @@ const Appointments = () => {
           <span className="pagination-info">
             Page {page} of {data.meta.totalPages}
           </span>
-          <Button 
-            variant="secondary" 
-            size="sm" 
+          <Button
+            variant="secondary"
+            size="sm"
             disabled={page === data.meta.totalPages}
             onClick={() => setPage(p => p + 1)}
           >
@@ -148,6 +164,12 @@ const Appointments = () => {
           </Button>
         </div>
       )}
+
+      <AppointmentFormModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        appointment={selectedAppointment}
+      />
     </div>
   );
 };

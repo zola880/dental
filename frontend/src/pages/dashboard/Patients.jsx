@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { patientService } from '../../services/patientService';
-import { Search, Plus, User } from 'lucide-react';
+import { Search, Plus, User, Eye, Edit } from 'lucide-react';
 import Table from '../../components/ui/Table';
 import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
+import PatientFormModal from '../../components/modals/PatientFormModal';
 import './Patients.css';
 
 const Patients = () => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState(null);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['patients', { search, page }],
@@ -56,11 +61,34 @@ const Patients = () => {
       key: 'actions',
       header: 'Actions',
       align: 'right',
-      render: () => (
-        <Button variant="secondary" size="sm">View Profile</Button>
+      render: (row) => (
+        <div className="action-buttons">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => navigate(`/dashboard/patients/${row._id}`)}
+          >
+            <Eye size={14} /> View
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => {
+              setSelectedPatient(row);
+              setIsModalOpen(true);
+            }}
+          >
+            <Edit size={14} /> Edit
+          </Button>
+        </div>
       ),
     },
   ];
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedPatient(null);
+  };
 
   return (
     <div className="page-container">
@@ -69,7 +97,7 @@ const Patients = () => {
           <h1 className="page-title">Patients</h1>
           <p className="page-subtitle">Manage and view all registered patients.</p>
         </div>
-        <Button variant="primary">
+        <Button variant="primary" onClick={() => setIsModalOpen(true)}>
           <Plus size={18} /> Add New Patient
         </Button>
       </div>
@@ -87,18 +115,18 @@ const Patients = () => {
 
       {error && <div className="error-message">Failed to load patients. Please try again.</div>}
 
-      <Table 
-        columns={columns} 
-        data={data?.data || []} 
-        isLoading={isLoading} 
+      <Table
+        columns={columns}
+        data={data?.data || []}
+        isLoading={isLoading}
         emptyMessage="No patients found matching your criteria."
       />
 
       {data?.meta && data.meta.totalPages > 1 && (
         <div className="pagination">
-          <Button 
-            variant="secondary" 
-            size="sm" 
+          <Button
+            variant="secondary"
+            size="sm"
             disabled={page === 1}
             onClick={() => setPage(p => p - 1)}
           >
@@ -107,9 +135,9 @@ const Patients = () => {
           <span className="pagination-info">
             Page {page} of {data.meta.totalPages}
           </span>
-          <Button 
-            variant="secondary" 
-            size="sm" 
+          <Button
+            variant="secondary"
+            size="sm"
             disabled={page === data.meta.totalPages}
             onClick={() => setPage(p => p + 1)}
           >
@@ -117,6 +145,12 @@ const Patients = () => {
           </Button>
         </div>
       )}
+
+      <PatientFormModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        patient={selectedPatient}
+      />
     </div>
   );
 };

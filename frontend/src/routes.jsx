@@ -22,6 +22,7 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 // Dashboard Pages
 import Dashboard from './pages/dashboard/Dashboard';
 import Patients from './pages/dashboard/Patients';
+import PatientProfile from './pages/dashboard/PatientProfile';
 import Appointments from './pages/dashboard/Appointments';
 import Treatments from './pages/dashboard/Treatments';
 import Dentists from './pages/dashboard/Dentists';
@@ -79,55 +80,56 @@ const AppRoutes = () => {
         >
           <Route index element={<Dashboard />} />
           <Route path="patients" element={<Patients />} />
+          <Route path="patients/:id" element={<PatientProfile />} />
           <Route path="appointments" element={<Appointments />} />
-          <Route 
-            path="treatments" 
+          <Route
+            path="treatments"
             element={
               <ProtectedRoute allowedRoles={['admin', 'dentist']}>
                 <Treatments />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="dentists" 
+          <Route
+            path="dentists"
             element={
               <ProtectedRoute allowedRoles={['admin']}>
                 <Dentists />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="services" 
+          <Route
+            path="services"
             element={
               <ProtectedRoute allowedRoles={['admin']}>
                 <ServicesManagement />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="billing" 
+          <Route
+            path="billing"
             element={
               <ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}>
                 <Billing />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="financials" 
+          <Route
+            path="financials"
             element={
               <ProtectedRoute allowedRoles={['admin', 'accountant']}>
                 <Financials />
               </ProtectedRoute>
-            } 
+            }
           />
           <Route path="notifications" element={<Notifications />} />
-          <Route 
-            path="settings" 
+          <Route
+            path="settings"
             element={
               <ProtectedRoute allowedRoles={['admin']}>
                 <Settings />
               </ProtectedRoute>
-            } 
+            }
           />
         </Route>
 

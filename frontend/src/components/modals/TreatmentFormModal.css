@@ -1,0 +1,11 @@
+.treatment-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.treatment-textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: var(--font-family-base);
+}
