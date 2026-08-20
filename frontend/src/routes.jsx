@@ -24,8 +24,12 @@ import Dashboard from './pages/dashboard/Dashboard';
 import Patients from './pages/dashboard/Patients';
 import Appointments from './pages/dashboard/Appointments';
 import Treatments from './pages/dashboard/Treatments';
+import Dentists from './pages/dashboard/Dentists';
+import ServicesManagement from './pages/dashboard/Services';
 import Billing from './pages/dashboard/Billing';
 import Financials from './pages/dashboard/Financials';
+import Notifications from './pages/dashboard/Notifications';
+import Settings from './pages/dashboard/Settings';
 
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
   const { user, isLoading } = useAuth();
@@ -85,6 +89,22 @@ const AppRoutes = () => {
             } 
           />
           <Route 
+            path="dentists" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <Dentists />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="services" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <ServicesManagement />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
             path="billing" 
             element={
               <ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}>
@@ -97,6 +117,15 @@ const AppRoutes = () => {
             element={
               <ProtectedRoute allowedRoles={['admin', 'accountant']}>
                 <Financials />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="notifications" element={<Notifications />} />
+          <Route 
+            path="settings" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <Settings />
               </ProtectedRoute>
             } 
           />
