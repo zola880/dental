@@ -1,0 +1,10 @@
+.public-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background);
+}
+
+.public-layout__main {
+  flex: 1;
+}

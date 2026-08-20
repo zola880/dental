@@ -1,0 +1,125 @@
+.booking-hero {
+  padding: var(--spacing-2xl) 0;
+  text-align: center;
+  background: linear-gradient(135deg, var(--color-background) 0%, var(--color-primary-light) 100%);
+}
+
+.booking-hero__title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.booking-hero__description {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.booking-form-section {
+  padding: var(--spacing-2xl) 0;
+}
+
+.booking-form-wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.booking-form {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+}
+
+.booking-form__section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.booking-form__section:last-of-type {
+  margin-bottom: var(--spacing-lg);
+}
+
+.booking-form__section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.booking-form__section-title svg {
+  color: var(--color-primary);
+}
+
+.booking-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.booking-form__row:last-child {
+  margin-bottom: 0;
+}
+
+.booking-textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: var(--font-family-base);
+}
+
+.booking-form__submit {
+  width: 100%;
+  margin-top: var(--spacing-md);
+}
+
+.booking-success {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.booking-success__icon {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto var(--spacing-lg);
+  border-radius: var(--radius-full);
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--color-success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.booking-success__title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.booking-success__description {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 600px) {
+  .booking-form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-form {
+    padding: var(--spacing-lg);
+  }
+}
