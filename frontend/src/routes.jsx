@@ -57,7 +57,6 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Website Routes */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -67,12 +66,10 @@ const AppRoutes = () => {
           <Route path="/book-appointment" element={<AppointmentBooking />} />
         </Route>
 
-        {/* Auth Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        {/* Protected Dashboard Routes */}
         <Route
           path="/dashboard"
           element={
@@ -86,74 +83,17 @@ const AppRoutes = () => {
           <Route path="patients/:id" element={<PatientProfile />} />
           <Route path="appointments" element={<Appointments />} />
           <Route path="appointments/calendar" element={<AppointmentCalendar />} />
-          <Route 
-            path="treatments" 
-            element={
-              <ProtectedRoute allowedRoles={['admin', 'dentist']}>
-                <Treatments />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="treatments/:treatmentId/records" 
-            element={
-              <ProtectedRoute allowedRoles={['admin', 'dentist']}>
-                <TreatmentRecords />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="dentists" 
-            element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <Dentists />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="services" 
-            element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <ServicesManagement />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="billing" 
-            element={
-              <ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}>
-                <Billing />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="billing/:invoiceId" 
-            element={
-              <ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}>
-                <InvoiceDetails />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="financials" 
-            element={
-              <ProtectedRoute allowedRoles={['admin', 'accountant']}>
-                <Financials />
-              </ProtectedRoute>
-            } 
-          />
+          <Route path="treatments" element={<ProtectedRoute allowedRoles={['admin', 'dentist']}><Treatments /></ProtectedRoute>} />
+          <Route path="treatments/:treatmentId/records" element={<ProtectedRoute allowedRoles={['admin', 'dentist']}><TreatmentRecords /></ProtectedRoute>} />
+          <Route path="dentists" element={<ProtectedRoute allowedRoles={['admin']}><Dentists /></ProtectedRoute>} />
+          <Route path="services" element={<ProtectedRoute allowedRoles={['admin']}><ServicesManagement /></ProtectedRoute>} />
+          <Route path="billing" element={<ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}><Billing /></ProtectedRoute>} />
+          <Route path="billing/:invoiceId" element={<ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}><InvoiceDetails /></ProtectedRoute>} />
+          <Route path="financials" element={<ProtectedRoute allowedRoles={['admin', 'accountant']}><Financials /></ProtectedRoute>} />
           <Route path="notifications" element={<Notifications />} />
-          <Route 
-            path="settings" 
-            element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <Settings />
-              </ProtectedRoute>
-            } 
-          />
+          <Route path="settings" element={<ProtectedRoute allowedRoles={['admin']}><Settings /></ProtectedRoute>} />
         </Route>
 
-        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
