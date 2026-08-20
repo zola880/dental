@@ -1,0 +1,267 @@
+.records-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.records-loading,
+.records-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: var(--spacing-md);
+  color: var(--color-text-secondary);
+}
+
+.records-header {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Treatment Summary */
+.treatment-summary {
+  margin-bottom: var(--spacing-xl);
+}
+
+.treatment-summary__header {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+}
+
+.treatment-summary__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.treatment-summary__info {
+  flex: 1;
+}
+
+.treatment-summary__title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.treatment-summary__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.treatment-summary__meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.treatment-summary__description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+.treatment-summary__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.treatment-summary__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.treatment-summary__stat-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.treatment-summary__stat-value {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+/* Records Section */
+.records-section {
+  margin-top: var(--spacing-xl);
+}
+
+.records-section__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.records-section__title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-secondary);
+}
+
+.records-section__title svg {
+  color: var(--color-primary);
+}
+
+.records-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2xl);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.records-empty svg {
+  color: var(--color-primary-light);
+  margin-bottom: var(--spacing-md);
+}
+
+.records-empty h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.records-empty p {
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Record Card */
+.record-card {
+  transition: all var(--transition-fast);
+}
+
+.record-card:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.record-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.record-card__title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.record-card__title svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.record-card__title h3 {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.record-card__meta {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.record-card__date,
+.record-card__cost {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.record-card__cost {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.record-card__notes {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  padding: var(--spacing-md);
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.record-card__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.record-card__dentist {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .treatment-summary__header {
+    flex-direction: column;
+  }
+
+  .treatment-summary__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .records-section__header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    align-items: stretch;
+  }
+
+  .record-card__header {
+    flex-direction: column;
+  }
+}
