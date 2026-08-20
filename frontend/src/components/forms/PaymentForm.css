@@ -1,0 +1,51 @@
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.payment-form__info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.payment-form__info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.payment-form__info-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.payment-form__info-value {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.payment-form__info-value--highlight {
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+}
+
+.payment-notes-textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: var(--font-family-base);
+}
+
+@media (max-width: 600px) {
+  .payment-form__info {
+    grid-template-columns: 1fr;
+  }
+}

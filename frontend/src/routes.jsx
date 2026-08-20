@@ -22,7 +22,18 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 // Dashboard Pages
 import Dashboard from './pages/dashboard/Dashboard';
 import Patients from './pages/dashboard/Patients';
+import PatientProfile from './pages/dashboard/PatientProfile';
 import Appointments from './pages/dashboard/Appointments';
+import AppointmentCalendar from './pages/dashboard/AppointmentCalendar';
+import Treatments from './pages/dashboard/Treatments';
+import TreatmentRecords from './pages/dashboard/TreatmentRecords';
+import Dentists from './pages/dashboard/Dentists';
+import ServicesManagement from './pages/dashboard/Services';
+import Billing from './pages/dashboard/Billing';
+import InvoiceDetails from './pages/dashboard/InvoiceDetails';
+import Financials from './pages/dashboard/Financials';
+import Notifications from './pages/dashboard/Notifications';
+import Settings from './pages/dashboard/Settings';
 
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
   const { user, isLoading } = useAuth();
@@ -46,6 +57,7 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Website Routes */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -55,12 +67,14 @@ const AppRoutes = () => {
           <Route path="/book-appointment" element={<AppointmentBooking />} />
         </Route>
 
+        {/* Auth Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        <Route 
-          path="/dashboard" 
+        {/* Protected Dashboard Routes */}
+        <Route
+          path="/dashboard"
           element={
             <ProtectedRoute>
               <DashboardLayout />
@@ -69,9 +83,77 @@ const AppRoutes = () => {
         >
           <Route index element={<Dashboard />} />
           <Route path="patients" element={<Patients />} />
+          <Route path="patients/:id" element={<PatientProfile />} />
           <Route path="appointments" element={<Appointments />} />
+          <Route path="appointments/calendar" element={<AppointmentCalendar />} />
+          <Route 
+            path="treatments" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'dentist']}>
+                <Treatments />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="treatments/:treatmentId/records" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'dentist']}>
+                <TreatmentRecords />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="dentists" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <Dentists />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="services" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <ServicesManagement />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="billing" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}>
+                <Billing />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="billing/:invoiceId" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}>
+                <InvoiceDetails />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="financials" 
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'accountant']}>
+                <Financials />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="notifications" element={<Notifications />} />
+          <Route 
+            path="settings" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <Settings />
+              </ProtectedRoute>
+            } 
+          />
         </Route>
 
+        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
