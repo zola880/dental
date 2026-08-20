@@ -31,6 +31,7 @@ import Dentists from './pages/dashboard/Dentists';
 import ServicesManagement from './pages/dashboard/Services';
 import Billing from './pages/dashboard/Billing';
 import InvoiceDetails from './pages/dashboard/InvoiceDetails';
+import Expenses from './pages/dashboard/Expenses';
 import Financials from './pages/dashboard/Financials';
 import Notifications from './pages/dashboard/Notifications';
 import Settings from './pages/dashboard/Settings';
@@ -57,6 +58,7 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Website Routes */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -66,10 +68,12 @@ const AppRoutes = () => {
           <Route path="/book-appointment" element={<AppointmentBooking />} />
         </Route>
 
+        {/* Auth Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
+        {/* Protected Dashboard Routes */}
         <Route
           path="/dashboard"
           element={
@@ -89,11 +93,13 @@ const AppRoutes = () => {
           <Route path="services" element={<ProtectedRoute allowedRoles={['admin']}><ServicesManagement /></ProtectedRoute>} />
           <Route path="billing" element={<ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}><Billing /></ProtectedRoute>} />
           <Route path="billing/:invoiceId" element={<ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}><InvoiceDetails /></ProtectedRoute>} />
+          <Route path="expenses" element={<ProtectedRoute allowedRoles={['admin', 'accountant']}><Expenses /></ProtectedRoute>} />
           <Route path="financials" element={<ProtectedRoute allowedRoles={['admin', 'accountant']}><Financials /></ProtectedRoute>} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="settings" element={<ProtectedRoute allowedRoles={['admin']}><Settings /></ProtectedRoute>} />
         </Route>
 
+        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
