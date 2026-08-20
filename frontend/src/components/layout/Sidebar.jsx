@@ -7,13 +7,15 @@ import {
   Stethoscope, 
   Receipt, 
   TrendingUp, 
+  TrendingDown,
   Bell, 
   Settings, 
   LogOut,
   Menu,
   X,
   Tooth,
-  Briefcase
+  Briefcase,
+  ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import './Sidebar.css';
@@ -31,8 +33,10 @@ const Sidebar = () => {
     { path: '/dashboard/dentists', icon: Briefcase, label: 'Dentists', roles: ['admin'] },
     { path: '/dashboard/services', icon: Briefcase, label: 'Services', roles: ['admin'] },
     { path: '/dashboard/billing', icon: Receipt, label: 'Billing', roles: ['admin', 'accountant', 'receptionist'] },
+    { path: '/dashboard/expenses', icon: TrendingDown, label: 'Expenses', roles: ['admin', 'accountant'] },
     { path: '/dashboard/financials', icon: TrendingUp, label: 'Financials', roles: ['admin', 'accountant'] },
     { path: '/dashboard/notifications', icon: Bell, label: 'Notifications', roles: ['admin', 'dentist', 'receptionist', 'accountant'] },
+    { path: '/dashboard/audit-logs', icon: ShieldCheck, label: 'Audit Logs', roles: ['admin'] },
     { path: '/dashboard/settings', icon: Settings, label: 'Settings', roles: ['admin'] },
   ];
 

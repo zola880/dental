@@ -31,8 +31,10 @@ import Dentists from './pages/dashboard/Dentists';
 import ServicesManagement from './pages/dashboard/Services';
 import Billing from './pages/dashboard/Billing';
 import InvoiceDetails from './pages/dashboard/InvoiceDetails';
+import Expenses from './pages/dashboard/Expenses';
 import Financials from './pages/dashboard/Financials';
 import Notifications from './pages/dashboard/Notifications';
+import AuditLogs from './pages/dashboard/AuditLogs';
 import Settings from './pages/dashboard/Settings';
 
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
@@ -89,8 +91,10 @@ const AppRoutes = () => {
           <Route path="services" element={<ProtectedRoute allowedRoles={['admin']}><ServicesManagement /></ProtectedRoute>} />
           <Route path="billing" element={<ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}><Billing /></ProtectedRoute>} />
           <Route path="billing/:invoiceId" element={<ProtectedRoute allowedRoles={['admin', 'accountant', 'receptionist']}><InvoiceDetails /></ProtectedRoute>} />
+          <Route path="expenses" element={<ProtectedRoute allowedRoles={['admin', 'accountant']}><Expenses /></ProtectedRoute>} />
           <Route path="financials" element={<ProtectedRoute allowedRoles={['admin', 'accountant']}><Financials /></ProtectedRoute>} />
           <Route path="notifications" element={<Notifications />} />
+          <Route path="audit-logs" element={<ProtectedRoute allowedRoles={['admin']}><AuditLogs /></ProtectedRoute>} />
           <Route path="settings" element={<ProtectedRoute allowedRoles={['admin']}><Settings /></ProtectedRoute>} />
         </Route>
 
