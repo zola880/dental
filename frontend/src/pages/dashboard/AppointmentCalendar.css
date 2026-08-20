@@ -1,0 +1,177 @@
+.calendar-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.calendar-page__actions {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.view-toggle {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.view-toggle__btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-surface);
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+  font-family: var(--font-family-base);
+}
+
+.view-toggle__btn:not(:last-child) {
+  border-right: 1px solid var(--color-border);
+}
+
+.view-toggle__btn:hover {
+  background-color: var(--color-background);
+}
+
+.view-toggle__btn--active {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.view-toggle__btn--active:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.calendar-loading {
+  padding: var(--spacing-2xl);
+  text-align: center;
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+/* Calendar Appointment Items */
+.calendar-appointments {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.calendar-appointment {
+  padding: 2px 4px;
+  background-color: var(--color-background);
+  border-left: 3px solid;
+  border-radius: 2px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.calendar-appointment:hover {
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.calendar-appointment__time {
+  display: block;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.calendar-appointment__patient {
+  display: block;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calendar-appointment__more {
+  font-size: 10px;
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Selected Date Info */
+.selected-date-info {
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.selected-date-info h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+.selected-date-appointments {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.no-appointments {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  padding: var(--spacing-lg);
+}
+
+.appointment-detail-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.appointment-detail-card__time {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+  min-width: 80px;
+}
+
+.appointment-detail-card__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.appointment-detail-card__patient {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.appointment-detail-card__dentist {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 768px) {
+  .calendar-page__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .appointment-detail-card {
+    flex-wrap: wrap;
+  }
+}
